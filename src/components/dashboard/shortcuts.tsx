@@ -42,51 +42,58 @@ export function Shortcuts({ open, onOpenChange }: ShortcutsProps) {
             <CommandInput placeholder="Bir komut yazın veya arama yapın..." />
             <CommandList>
                 <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
-                <CommandGroup heading="Sayfalar">
+                <CommandGroup heading="Sayfalar" className="px-2">
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <LayoutDashboard className="mr-2 h-4 w-4" />
                         Dashboard
                     </CommandItem>
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard/players"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <Users className="mr-2 h-4 w-4" />
                         Oyuncular
                     </CommandItem>
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard/coaches"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <GraduationCap className="mr-2 h-4 w-4" />
                         Antrenörler
                     </CommandItem>
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard/parents"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <Heart className="mr-2 h-4 w-4" />
                         Veliler
                     </CommandItem>
                 </CommandGroup>
                 <CommandSeparator />
-                <CommandGroup heading="Takım">
+                <CommandGroup heading="Takım" className="px-2">
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard/teams"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <UserPlus className="mr-2 h-4 w-4" />
                         Takımlar
                     </CommandItem>
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard/tournaments"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <Trophy className="mr-2 h-4 w-4" />
                         Turnuvalar
                     </CommandItem>
                 </CommandGroup>
                 <CommandSeparator />
-                <CommandGroup heading="Ayarlar">
+                <CommandGroup heading="Ayarlar" className="px-2">
                     <CommandItem
                         onSelect={() => runCommand(() => router.push("/dashboard/settings"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
                     >
                         <Settings className="mr-2 h-4 w-4" />
                         Ayarlar

@@ -19,6 +19,7 @@ import { Shortcuts } from "@/components/dashboard/shortcuts"
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
+import { UserNav } from "@/components/dashboard/user-nav"
 
 interface DashboardNavProps {
     isCollapsed: boolean;
@@ -99,50 +100,7 @@ export function DashboardNav({ isCollapsed, onCollapsedChange }: DashboardNavPro
                         <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                     </Button>
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="ghost"
-                                className="h-8 w-8 rounded-full"
-                            >
-                                <Avatar className="h-7 w-7">
-                                    <AvatarImage src="/avatars/01.png" alt="@username" />
-                                    <AvatarFallback>JD</AvatarFallback>
-                                </Avatar>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56" align="end" forceMount>
-                            <DropdownMenuLabel className="font-normal">
-                                <div className="flex flex-col space-y-1">
-                                    <p className="text-sm font-medium">John Doe</p>
-                                    <p className="text-xs text-muted-foreground">
-                                        john@example.com
-                                    </p>
-                                </div>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem>
-                                    <Link href="/dashboard/profile" className="flex items-center">
-                                        Profil
-                                        <DropdownMenuShortcut>⇧P</DropdownMenuShortcut>
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Link href="/dashboard/settings" className="flex items-center">
-                                        <Settings className="mr-2 h-3.5 w-3.5" />
-                                        Ayarlar
-                                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                Çıkış Yap
-                                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <UserNav />
                 </div>
             </div>
             <Shortcuts open={shortcutsOpen} onOpenChange={setShortcutsOpen} />

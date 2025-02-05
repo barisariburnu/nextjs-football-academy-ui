@@ -1,79 +1,93 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { Plus } from "lucide-react"
+"use client"
 
-const players = [
+import { Button } from "@/components/ui/button"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Plus } from "lucide-react"
+import { columns } from "./columns"
+import { DataTable } from "@/components/datatable/data-table"
+import { Player } from "./columns"
+
+const players: Player[] = [
     {
-        id: 1,
+        id: "1",
         name: "Ahmet Yılmaz",
+        email: "ahmet@example.com",
+        phone: "+90 555 123 4567",
         age: 15,
-        team: "U15 Takımı",
         position: "Forvet",
-        joinDate: "01.01.2023",
+        status: "active"
     },
     {
-        id: 2,
+        id: "2",
         name: "Mehmet Demir",
+        email: "mehmet@example.com",
+        phone: "+90 555 234 5678",
         age: 14,
-        team: "U15 Takımı",
         position: "Orta Saha",
-        joinDate: "15.02.2023",
+        status: "active"
     },
     {
-        id: 3,
+        id: "3",
         name: "Ali Kaya",
+        email: "ali@example.com",
+        phone: "+90 555 345 6789",
         age: 16,
-        team: "U16 Takımı",
         position: "Defans",
-        joinDate: "10.03.2023",
+        status: "inactive"
     },
 ]
 
 export default function PlayersPage() {
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h2 className="text-3xl font-bold tracking-tight">Oyuncular</h2>
+        <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold tracking-tight">Oyuncular</h1>
                 <Button>
                     <Plus className="mr-2 h-4 w-4" />
                     Yeni Oyuncu
                 </Button>
             </div>
+
             <Card>
                 <CardHeader>
                     <CardTitle>Tüm Oyuncular</CardTitle>
+                    <CardDescription>
+                        Akademideki tüm oyuncuların listesi.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>İsim</TableHead>
-                                <TableHead>Yaş</TableHead>
-                                <TableHead>Takım</TableHead>
-                                <TableHead>Pozisyon</TableHead>
-                                <TableHead>Katılım Tarihi</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {players.map((player) => (
-                                <TableRow key={player.id}>
-                                    <TableCell className="font-medium">{player.name}</TableCell>
-                                    <TableCell>{player.age}</TableCell>
-                                    <TableCell>{player.team}</TableCell>
-                                    <TableCell>{player.position}</TableCell>
-                                    <TableCell>{player.joinDate}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                    <DataTable
+                        columns={columns}
+                        data={players}
+                        searchableColumns={[
+                            {
+                                id: "name",
+                                title: "İsim"
+                            }
+                        ]}
+                        filterableColumns={[
+                            {
+                                id: "status",
+                                title: "Durum",
+                                options: [
+                                    {
+                                        label: "Aktif",
+                                        value: "active",
+                                    },
+                                    {
+                                        label: "Pasif",
+                                        value: "inactive",
+                                    },
+                                ],
+                            },
+                        ]}
+                    />
                 </CardContent>
             </Card>
         </div>

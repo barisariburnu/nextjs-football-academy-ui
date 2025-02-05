@@ -1,79 +1,93 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { Plus } from "lucide-react"
+"use client"
 
-const coaches = [
+import { Button } from "@/components/ui/button"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Plus } from "lucide-react"
+import { columns } from "./columns"
+import { DataTable } from "@/components/datatable/data-table"
+import { Coach } from "./columns"
+
+const coaches: Coach[] = [
     {
-        id: 1,
-        name: "Mehmet Yılmaz",
-        team: "U15 Takımı",
-        license: "UEFA A",
-        experience: "8 yıl",
-        phone: "+90 555 111 2233",
+        id: "1",
+        name: "Fatih Terim",
+        email: "fatih@example.com",
+        phone: "+90 555 123 4567",
+        age: 70,
+        position: "Teknik Direktör",
+        status: "active"
     },
     {
-        id: 2,
-        name: "Ayşe Demir",
-        team: "U16 Takımı",
-        license: "UEFA B",
-        experience: "5 yıl",
-        phone: "+90 555 222 3344",
+        id: "2",
+        name: "Şenol Güneş",
+        email: "senol@example.com",
+        phone: "+90 555 234 5678",
+        age: 71,
+        position: "Teknik Direktör",
+        status: "active"
     },
     {
-        id: 3,
-        name: "Ali Kaya",
-        team: "U17 Takımı",
-        license: "UEFA Pro",
-        experience: "12 yıl",
-        phone: "+90 555 333 4455",
+        id: "3",
+        name: "Abdullah Avcı",
+        email: "abdullah@example.com",
+        phone: "+90 555 345 6789",
+        age: 60,
+        position: "Teknik Direktör",
+        status: "inactive"
     },
 ]
 
 export default function CoachesPage() {
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h2 className="text-3xl font-bold tracking-tight">Antrenörler</h2>
+        <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold tracking-tight">Antrenörler</h1>
                 <Button>
                     <Plus className="mr-2 h-4 w-4" />
                     Yeni Antrenör
                 </Button>
             </div>
+
             <Card>
                 <CardHeader>
                     <CardTitle>Tüm Antrenörler</CardTitle>
+                    <CardDescription>
+                        Akademideki tüm antrenörlerin listesi.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>İsim</TableHead>
-                                <TableHead>Takım</TableHead>
-                                <TableHead>Lisans</TableHead>
-                                <TableHead>Deneyim</TableHead>
-                                <TableHead>Telefon</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {coaches.map((coach) => (
-                                <TableRow key={coach.id}>
-                                    <TableCell className="font-medium">{coach.name}</TableCell>
-                                    <TableCell>{coach.team}</TableCell>
-                                    <TableCell>{coach.license}</TableCell>
-                                    <TableCell>{coach.experience}</TableCell>
-                                    <TableCell>{coach.phone}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                    <DataTable
+                        columns={columns}
+                        data={coaches}
+                        searchableColumns={[
+                            {
+                                id: "name",
+                                title: "İsim"
+                            }
+                        ]}
+                        filterableColumns={[
+                            {
+                                id: "status",
+                                title: "Durum",
+                                options: [
+                                    {
+                                        label: "Aktif",
+                                        value: "active",
+                                    },
+                                    {
+                                        label: "Pasif",
+                                        value: "inactive",
+                                    },
+                                ],
+                            },
+                        ]}
+                    />
                 </CardContent>
             </Card>
         </div>
