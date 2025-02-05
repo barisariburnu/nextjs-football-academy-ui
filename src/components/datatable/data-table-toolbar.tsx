@@ -2,11 +2,19 @@
 
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
+import { FileDown } from "lucide-react"
+import { generatePDF } from "@/lib/pdf-generator"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTableViewOptions } from "@/components/datatable/data-table-view-options"
 import { DataTableFacetedFilter } from "@/components/datatable/data-table-faceted-filter"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>
@@ -36,6 +44,39 @@ export function DataTableToolbar<TData>({
     deletableColumns = [],
 }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0
+
+    const handleExportCSV = () => {
+        const headers = table.getAllColumns()
+            .filter(column => column.getCanHide())
+            .map(column => column.id)
+            .join(",")
+
+        const rows = table.getFilteredRowModel().rows
+            .map(row => {
+                return headers.split(",")
+                    .map(header => {
+                        const value = row.getValue(header)
+                        return typeof value === "string" ? `"${value}"` : value
+                    })
+                    .join(",")
+            })
+            .join("\n")
+
+        const csv = `${headers}\n${rows}`
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+        const link = document.createElement("a")
+        const url = URL.createObjectURL(blob)
+        link.setAttribute("href", url)
+        link.setAttribute("download", "export.csv")
+        link.style.visibility = "hidden"
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+
+    const handleExportPDF = async () => {
+        await generatePDF(table)
+    }
 
     return (
         <div className="flex items-center justify-between">
@@ -84,7 +125,25 @@ export function DataTableToolbar<TData>({
                     </Button>
                 )}
             </div>
-            <DataTableViewOptions table={table} />
+            <div className="flex items-center space-x-2">
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="h-8">
+                            <FileDown className="mr-2 h-4 w-4" />
+                            Dışa Aktar
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={handleExportCSV} className="cursor-pointer">
+                            CSV İndir
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleExportPDF} className="cursor-pointer">
+                            PDF İndir
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <DataTableViewOptions table={table} />
+            </div>
         </div>
     )
 } 
