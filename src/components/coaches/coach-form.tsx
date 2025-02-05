@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Player } from "@/app/(dashboard)/dashboard/players/columns"
+import { Coach } from "@/app/(dashboard)/dashboard/coaches/columns"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
@@ -20,8 +20,8 @@ const formSchema = z.object({
     phone: z.string().min(10, {
         message: "Geçerli bir telefon numarası giriniz.",
     }),
-    age: z.coerce.number().min(5).max(25, {
-        message: "Yaş 5 ile 25 arasında olmalıdır.",
+    age: z.coerce.number().min(25).max(75, {
+        message: "Yaş 25 ile 75 arasında olmalıdır.",
     }),
     position: z.string({
         required_error: "Lütfen bir pozisyon seçiniz.",
@@ -31,12 +31,12 @@ const formSchema = z.object({
     }),
 })
 
-interface PlayerFormProps {
-    initialData?: Player
+interface CoachFormProps {
+    initialData?: Coach
     onSubmit: (data: z.infer<typeof formSchema>) => void
 }
 
-export function PlayerForm({ initialData, onSubmit }: PlayerFormProps) {
+export function CoachForm({ initialData, onSubmit }: CoachFormProps) {
     const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -60,7 +60,7 @@ export function PlayerForm({ initialData, onSubmit }: PlayerFormProps) {
                         <FormItem>
                             <FormLabel>İsim</FormLabel>
                             <FormControl>
-                                <Input placeholder="Ahmet Yılmaz" {...field} />
+                                <Input placeholder="Fatih Terim" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -102,7 +102,7 @@ export function PlayerForm({ initialData, onSubmit }: PlayerFormProps) {
                         <FormItem>
                             <FormLabel>Yaş</FormLabel>
                             <FormControl>
-                                <Input type="number" min={5} max={25} {...field} />
+                                <Input type="number" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -118,14 +118,14 @@ export function PlayerForm({ initialData, onSubmit }: PlayerFormProps) {
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Pozisyon seçiniz" />
+                                        <SelectValue placeholder="Pozisyon seçin" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="Kaleci">Kaleci</SelectItem>
-                                    <SelectItem value="Defans">Defans</SelectItem>
-                                    <SelectItem value="Orta Saha">Orta Saha</SelectItem>
-                                    <SelectItem value="Forvet">Forvet</SelectItem>
+                                    <SelectItem value="Teknik Direktör">Teknik Direktör</SelectItem>
+                                    <SelectItem value="Yardımcı Antrenör">Yardımcı Antrenör</SelectItem>
+                                    <SelectItem value="Kaleci Antrenörü">Kaleci Antrenörü</SelectItem>
+                                    <SelectItem value="Kondisyoner">Kondisyoner</SelectItem>
                                 </SelectContent>
                             </Select>
                             <FormMessage />
@@ -142,7 +142,7 @@ export function PlayerForm({ initialData, onSubmit }: PlayerFormProps) {
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Durum seçiniz" />
+                                        <SelectValue placeholder="Durum seçin" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -160,7 +160,7 @@ export function PlayerForm({ initialData, onSubmit }: PlayerFormProps) {
                         İptal
                     </Button>
                     <Button type="submit">
-                        {initialData ? "Güncelle" : "Kaydet"}
+                        {initialData ? "Güncelle" : "Oluştur"}
                     </Button>
                 </div>
             </form>
