@@ -11,7 +11,7 @@ export type Team = {
     name: string
     category: string
     coach: string
-    players: number
+    players: string[]
     status: "active" | "inactive"
 }
 
@@ -61,8 +61,16 @@ export const columns: ColumnDef<Team>[] = [
     {
         accessorKey: "players",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Oyuncu Sayısı" />
+            <DataTableColumnHeader column={column} title="Oyuncular" />
         ),
+        cell: ({ row }) => {
+            const players = row.getValue("players") as string[]
+            return (
+                <div className="flex items-center gap-2">
+                    <Badge variant="outline">{players.length} oyuncu</Badge>
+                </div>
+            )
+        },
     },
     {
         accessorKey: "status",
@@ -71,17 +79,13 @@ export const columns: ColumnDef<Team>[] = [
         ),
         cell: ({ row }) => {
             const status = row.getValue("status") as string
-
             return (
-                <Badge
-                    variant={status === "active" ? "default" : "secondary"}
-                >
-                    {status === "active" ? "Aktif" : "Pasif"}
-                </Badge>
+                <div className="flex items-center gap-2">
+                    <Badge variant={status === "active" ? "default" : "secondary"}>
+                        {status === "active" ? "Aktif" : "Pasif"}
+                    </Badge>
+                </div>
             )
-        },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id))
         },
     },
     {
