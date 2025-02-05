@@ -13,7 +13,18 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Search, X } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
+// Örnek öğrenci listesi - Bu veri API'den gelecek
+const availableChildren = [
+    "Ali Yılmaz",
+    "Mehmet Kaya",
+    "Ayşe Yılmaz",
+    "Zeynep Şahin",
+    "Can Öztürk",
+    "Burak Aydın",
+    "Elif Yıldız",
+]
 
 const formSchema = z.object({
     name: z.string().min(2, {
@@ -38,48 +49,57 @@ interface ParentFormProps {
     onSubmit: (data: z.infer<typeof formSchema>) => void
 }
 
-// Örnek oyuncu listesi - Bu liste API'den gelecek
-const players = [
-    { label: "Ali Yılmaz", value: "Ali Yılmaz" },
-    { label: "Ayşe Demir", value: "Ayşe Demir" },
-    { label: "Mehmet Kaya", value: "Mehmet Kaya" },
-    { label: "Zeynep Şahin", value: "Zeynep Şahin" },
-    { label: "Can Öztürk", value: "Can Öztürk" },
-    { label: "Elif Yıldız", value: "Elif Yıldız" },
-    { label: "Burak Aydın", value: "Burak Aydın" },
-    { label: "Selin Çelik", value: "Selin Çelik" },
-]
-
-const ITEMS_PER_PAGE = 5
-
 export function ParentForm({ initialData, onSubmit }: ParentFormProps) {
     const router = useRouter()
     const [searchQuery, setSearchQuery] = useState("")
     const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 4
+    const [allChildren, setAllChildren] = useState<string[]>([])
+
+    useEffect(() => {
+        // Başlangıçta tüm çocukları set et
+        setAllChildren(availableChildren)
+    }, [])
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: initialData?.name || "",
-            email: initialData?.email || "",
-            phone: initialData?.phone || "",
-            children: initialData?.children || [],
-            status: initialData?.status || "active",
+            name: initialData?.name ?? "",
+            email: initialData?.email ?? "",
+            phone: initialData?.phone ?? "",
+            children: initialData?.children ?? [],
+            status: initialData?.status ?? "active",
         },
     })
 
-    // Arama ve sayfalama işlemleri
-    const filteredPlayers = players.filter(player =>
-        player.label.toLowerCase().includes(searchQuery.toLowerCase())
+    const selectedChildren = form.watch("children")
+
+    const filteredChildren = allChildren.filter(child =>
+        child.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        !selectedChildren.includes(child)
     )
 
-    const totalPages = Math.ceil(filteredPlayers.length / ITEMS_PER_PAGE)
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-    const paginatedPlayers = filteredPlayers.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+    const totalPages = Math.ceil(filteredChildren.length / itemsPerPage)
+    const currentChildren = filteredChildren.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    )
+
+    const handleChildSelect = (child: string) => {
+        const currentChildren = form.getValues("children")
+        if (!currentChildren.includes(child)) {
+            form.setValue("children", [...currentChildren, child])
+        }
+    }
+
+    const handleChildRemove = (child: string) => {
+        const currentChildren = form.getValues("children")
+        form.setValue("children", currentChildren.filter(c => c !== child))
+    }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                     control={form.control}
                     name="name"
@@ -101,7 +121,7 @@ export function ParentForm({ initialData, onSubmit }: ParentFormProps) {
                         <FormItem>
                             <FormLabel>E-posta</FormLabel>
                             <FormControl>
-                                <Input placeholder="ornek@mail.com" {...field} />
+                                <Input placeholder="ornek@mail.com" type="email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -129,94 +149,77 @@ export function ParentForm({ initialData, onSubmit }: ParentFormProps) {
                         <FormItem>
                             <FormLabel>Çocuklar</FormLabel>
                             <Card className="p-4">
-                                {/* Seçili çocukların gösterimi */}
-                                {Array.isArray(field.value) && field.value.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 mb-4">
+                                <div className="space-y-4">
+                                    <div className="flex flex-wrap gap-2">
                                         {field.value.map((child) => (
                                             <Badge
                                                 key={child}
-                                                variant="secondary"
-                                                className="flex items-center gap-1"
+                                                variant="default"
+                                                className="gap-1 pr-0.5"
                                             >
-                                                {child}
-                                                <X
-                                                    className="h-3 w-3 cursor-pointer"
-                                                    onClick={() => {
-                                                        form.setValue(
-                                                            "children",
-                                                            field.value.filter((value) => value !== child),
-                                                            { shouldValidate: true }
-                                                        )
-                                                    }}
-                                                />
+                                                <span className="text-xs">{child}</span>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-4 w-4 hover:bg-transparent"
+                                                    onClick={() => handleChildRemove(child)}
+                                                >
+                                                    <X className="h-3 w-3" />
+                                                </Button>
                                             </Badge>
                                         ))}
                                     </div>
-                                )}
-
-                                {/* Arama kutusu */}
-                                <div className="relative mb-4">
-                                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                                    <Input
-                                        placeholder="Oyuncu ara..."
-                                        value={searchQuery}
-                                        onChange={(e) => {
-                                            setSearchQuery(e.target.value)
-                                            setCurrentPage(1)
-                                        }}
-                                        className="pl-8"
-                                    />
-                                </div>
-
-                                {/* Oyuncu listesi */}
-                                <ScrollArea className="h-[200px]">
-                                    <div className="space-y-2">
-                                        {paginatedPlayers.map((player) => (
-                                            <div
-                                                key={player.value}
-                                                className="flex items-center justify-between p-2 hover:bg-muted rounded-md cursor-pointer"
-                                                onClick={() => {
-                                                    const currentValue = Array.isArray(field.value) ? field.value : []
-                                                    const isSelected = currentValue.includes(player.value)
-                                                    const newValue = isSelected
-                                                        ? currentValue.filter((value) => value !== player.value)
-                                                        : [...currentValue, player.value]
-                                                    form.setValue("children", newValue, { shouldValidate: true })
-                                                }}
+                                    <div className="flex items-center gap-2">
+                                        <Search className="h-4 w-4 text-muted-foreground" />
+                                        <Input
+                                            placeholder="Çocuk ara..."
+                                            value={searchQuery}
+                                            onChange={(e) => {
+                                                setSearchQuery(e.target.value)
+                                                setCurrentPage(1)
+                                            }}
+                                            className="h-8"
+                                        />
+                                    </div>
+                                    <ScrollArea className="h-[120px]">
+                                        <div className="space-y-2">
+                                            {currentChildren.map((child) => (
+                                                <Button
+                                                    key={child}
+                                                    variant="ghost"
+                                                    className="w-full justify-start font-normal"
+                                                    onClick={() => handleChildSelect(child)}
+                                                >
+                                                    {child}
+                                                </Button>
+                                            ))}
+                                        </div>
+                                    </ScrollArea>
+                                    {totalPages > 1 && (
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                                                disabled={currentPage === 1}
                                             >
-                                                <span>{player.label}</span>
-                                                {field.value?.includes(player.value) && (
-                                                    <Badge>Seçili</Badge>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </ScrollArea>
-
-                                {/* Sayfalama */}
-                                {totalPages > 1 && (
-                                    <div className="flex justify-center gap-2 mt-4">
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                                            disabled={currentPage === 1}
-                                        >
-                                            Önceki
-                                        </Button>
-                                        <span className="flex items-center">
-                                            {currentPage} / {totalPages}
-                                        </span>
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                                            disabled={currentPage === totalPages}
-                                        >
-                                            Sonraki
-                                        </Button>
-                                    </div>
-                                )}
+                                                Önceki
+                                            </Button>
+                                            <span className="flex items-center">
+                                                {currentPage} / {totalPages}
+                                            </span>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                                                disabled={currentPage === totalPages}
+                                            >
+                                                Sonraki
+                                            </Button>
+                                        </div>
+                                    )}
+                                </div>
                             </Card>
                             <FormMessage />
                         </FormItem>
