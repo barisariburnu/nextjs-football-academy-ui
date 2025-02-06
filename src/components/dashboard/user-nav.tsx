@@ -1,6 +1,6 @@
 "use client"
 
-import { LogOut, Settings, User } from "lucide-react"
+import { LogOut, Settings, User, Shield } from "lucide-react"
 import { useRouter } from "next/navigation"
 import {
     DropdownMenu,
@@ -25,9 +25,13 @@ export function UserNav() {
                 e.preventDefault()
                 router.push("/dashboard/profile")
             }
-            if (e.ctrlKey && e.shiftKey && e.key === "S") {
+            if (e.shiftKey && e.key === "S") {
                 e.preventDefault()
-                router.push("/dashboard/settings")
+                if (e.ctrlKey) {
+                    router.push("/dashboard/settings")
+                } else {
+                    router.push("/dashboard/security")
+                }
             }
             if (e.ctrlKey && e.shiftKey && e.key === "Q") {
                 e.preventDefault()
@@ -79,6 +83,16 @@ export function UserNav() {
                             <span>Ayarlar</span>
                         </div>
                         <DropdownMenuShortcut>⌘⇧S</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() => router.push("/dashboard/security")}
+                        className="cursor-pointer"
+                    >
+                        <div className="flex items-center flex-1">
+                            <Shield className="mr-2 h-4 w-4" />
+                            <span>Güvenlik</span>
+                        </div>
+                        <DropdownMenuShortcut>⇧S</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

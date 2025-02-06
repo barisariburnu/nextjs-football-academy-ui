@@ -16,6 +16,7 @@ import {
 import { Bell, Menu, Search, Settings, PanelLeft, Sun, Moon, LogOut, User, Shield } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Shortcuts } from "@/components/dashboard/shortcuts"
+import { UserNav } from "@/components/dashboard/user-nav"
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -170,54 +171,7 @@ export function DashboardNav({ isCollapsed, onCollapsedChange }: DashboardNavPro
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="relative h-8 w-8" size="icon">
-                                <Avatar className="h-8 w-8">
-                                    <AvatarImage src="/avatars/01.png" alt="Profil" />
-                                    <AvatarFallback>FA</AvatarFallback>
-                                </Avatar>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56" align="end" forceMount>
-                            <DropdownMenuLabel className="font-normal">
-                                <div className="flex flex-col space-y-1">
-                                    <p className="text-sm font-medium leading-none">Fatih Terim</p>
-                                    <p className="text-xs leading-none text-muted-foreground">
-                                        fatih@example.com
-                                    </p>
-                                </div>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem className="cursor-pointer" asChild>
-                                    <Link href="/dashboard/profile">
-                                        <User className="mr-2 h-4 w-4" />
-                                        <span>Profil</span>
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="cursor-pointer" asChild>
-                                    <Link href="/dashboard/settings">
-                                        <Settings className="mr-2 h-4 w-4" />
-                                        <span>Ayarlar</span>
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="cursor-pointer" asChild>
-                                    <Link href="/dashboard/security">
-                                        <Shield className="mr-2 h-4 w-4" />
-                                        <span>Güvenlik</span>
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="cursor-pointer text-red-600" asChild>
-                                <Link href="/auth/login">
-                                    <LogOut className="mr-2 h-4 w-4" />
-                                    <span>Çıkış Yap</span>
-                                </Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <UserNav />
                 </div>
             </div>
             <Shortcuts open={shortcutsOpen} onOpenChange={setShortcutsOpen} />

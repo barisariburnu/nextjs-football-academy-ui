@@ -9,6 +9,7 @@ import {
     CommandItem,
     CommandList,
     CommandSeparator,
+    CommandShortcut,
 } from "@/components/ui/command"
 import {
     CalendarDays,
@@ -19,6 +20,7 @@ import {
     Users,
     UserPlus,
     Heart,
+    Shield,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { DialogTitle } from "@/components/ui/dialog"
@@ -97,6 +99,15 @@ export function Shortcuts({ open, onOpenChange }: ShortcutsProps) {
                     >
                         <Settings className="mr-2 h-4 w-4" />
                         Ayarlar
+                        <CommandShortcut>⌃⇧S</CommandShortcut>
+                    </CommandItem>
+                    <CommandItem
+                        onSelect={() => runCommand(() => router.push("/dashboard/security"))}
+                        className="cursor-pointer aria-selected:bg-muted aria-selected:text-foreground"
+                    >
+                        <Shield className="mr-2 h-4 w-4" />
+                        Güvenlik
+                        <CommandShortcut>⇧S</CommandShortcut>
                     </CommandItem>
                 </CommandGroup>
             </CommandList>

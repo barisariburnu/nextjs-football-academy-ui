@@ -1,15 +1,8 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { NotificationSettings } from "@/components/settings/notification-settings"
-import { SecuritySettings } from "@/components/settings/security-settings"
 import { AppearanceSettings } from "@/components/settings/appearance-settings"
 
 export default function SettingsPage() {
@@ -22,9 +15,8 @@ export default function SettingsPage() {
             <Card>
                 <CardContent className="p-6">
                     <Tabs defaultValue="notifications" className="space-y-4">
-                        <TabsList className="grid w-full grid-cols-3">
+                        <TabsList className="grid w-full grid-cols-2">
                             <TabsTrigger value="notifications">Bildirimler</TabsTrigger>
-                            <TabsTrigger value="security">Güvenlik</TabsTrigger>
                             <TabsTrigger value="appearance">Görünüm</TabsTrigger>
                         </TabsList>
                         <TabsContent value="notifications" className="space-y-4">
@@ -37,17 +29,6 @@ export default function SettingsPage() {
                                 </p>
                             </div>
                             <NotificationSettings />
-                        </TabsContent>
-                        <TabsContent value="security" className="space-y-4">
-                            <div>
-                                <h2 className="text-xl font-semibold tracking-tight">
-                                    Güvenlik Ayarları
-                                </h2>
-                                <p className="text-sm text-muted-foreground">
-                                    Hesap güvenliği ayarlarınızı yönetin.
-                                </p>
-                            </div>
-                            <SecuritySettings />
                         </TabsContent>
                         <TabsContent value="appearance" className="space-y-4">
                             <div>
