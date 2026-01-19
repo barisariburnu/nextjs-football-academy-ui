@@ -44,10 +44,6 @@ interface DataTableProps<TData, TValue> {
         id: string
         title: string
     }[]
-    deletableColumns?: {
-        id: string
-        title: string
-    }[]
 }
 
 export function DataTable<TData, TValue>({
@@ -55,7 +51,6 @@ export function DataTable<TData, TValue>({
     data,
     filterableColumns = [],
     searchableColumns = [],
-    deletableColumns = [],
 }: DataTableProps<TData, TValue>) {
     const [rowSelection, setRowSelection] = React.useState({})
     const [columnVisibility, setColumnVisibility] =
@@ -107,7 +102,6 @@ export function DataTable<TData, TValue>({
                 table={table}
                 filterableColumns={filterableColumns}
                 searchableColumns={searchableColumns}
-                deletableColumns={deletableColumns}
             />
             <div className="rounded-md border">
                 <Table>
