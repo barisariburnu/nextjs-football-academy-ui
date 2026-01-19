@@ -13,7 +13,7 @@ export default function ForgotPasswordPage() {
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2">
                         <p className="text-lg">
-                            "Güvenli ve kullanıcı dostu bir platform."
+                            &quot;Güvenli ve kullanıcı dostu bir platform.&quot;
                         </p>
                         <footer className="text-sm">Ali Kaya - Sistem Yöneticisi</footer>
                     </blockquote>

@@ -13,7 +13,7 @@ export default function RegisterPage() {
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2">
                         <p className="text-lg">
-                            "Genç yetenekleri keşfetmek ve geliştirmek için en iyi platform."
+                            &quot;Genç yetenekleri keşfetmek ve geliştirmek için en iyi platform.&quot;
                         </p>
                         <footer className="text-sm">Ayşe Demir - Antrenör</footer>
                     </blockquote>

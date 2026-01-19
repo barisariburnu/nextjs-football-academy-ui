@@ -13,7 +13,7 @@ export default function LoginPage() {
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2">
                         <p className="text-lg">
-                            "Bu platform sayesinde akademimizdeki tüm süreçleri çok daha etkili bir şekilde yönetebiliyoruz."
+                            &quot;Bu platform sayesinde akademimizdeki tüm süreçleri çok daha etkili bir şekilde yönetebiliyoruz.&quot;
                         </p>
                         <footer className="text-sm">Mehmet Yılmaz - Akademi Direktörü</footer>
                     </blockquote>
