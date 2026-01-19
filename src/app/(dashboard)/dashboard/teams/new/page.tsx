@@ -18,7 +18,7 @@ export default function NewTeamPage() {
             })
             router.push("/dashboard/teams")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Takım eklenirken bir hata oluştu.",

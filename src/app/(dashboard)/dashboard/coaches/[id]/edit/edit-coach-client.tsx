@@ -34,7 +34,7 @@ export function EditCoachClient({ id }: EditCoachClientProps) {
             })
             router.push("/dashboard/coaches")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Antrenör güncellenirken bir hata oluştu.",

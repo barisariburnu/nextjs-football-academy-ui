@@ -18,7 +18,7 @@ export default function NewPlayerPage() {
             })
             router.push("/dashboard/players")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Oyuncu eklenirken bir hata oluştu.",

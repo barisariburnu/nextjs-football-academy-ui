@@ -34,7 +34,7 @@ export function EditPlayerClient({ id }: EditPlayerClientProps) {
             })
             router.push("/dashboard/players")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Oyuncu güncellenirken bir hata oluştu.",

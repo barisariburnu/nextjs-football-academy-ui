@@ -33,7 +33,7 @@ export function EditTeamClient({ id }: EditTeamClientProps) {
             })
             router.push("/dashboard/teams")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Takım güncellenirken bir hata oluştu.",

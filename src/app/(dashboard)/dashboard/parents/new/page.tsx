@@ -18,7 +18,7 @@ export default function NewParentPage() {
             })
             router.push("/dashboard/parents")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Veli eklenirken bir hata oluştu.",

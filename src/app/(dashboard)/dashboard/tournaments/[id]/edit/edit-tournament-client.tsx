@@ -34,7 +34,7 @@ export function EditTournamentClient({ id }: EditTournamentClientProps) {
             })
             router.push("/dashboard/tournaments")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Turnuva güncellenirken bir hata oluştu.",

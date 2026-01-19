@@ -39,7 +39,7 @@ export function DataTableRowActions<TData>({
                 description: "Kayıt başarıyla kopyalandı.",
             })
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Kayıt kopyalanırken bir hata oluştu.",
@@ -57,7 +57,7 @@ export function DataTableRowActions<TData>({
                 description: "Kayıt başarıyla silindi.",
             })
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Kayıt silinirken bir hata oluştu.",

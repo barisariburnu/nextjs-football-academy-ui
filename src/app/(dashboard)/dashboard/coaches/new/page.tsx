@@ -18,7 +18,7 @@ export default function NewCoachPage() {
             })
             router.push("/dashboard/coaches")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Antrenör eklenirken bir hata oluştu.",

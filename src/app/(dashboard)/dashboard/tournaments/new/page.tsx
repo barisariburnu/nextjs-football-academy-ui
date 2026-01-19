@@ -18,7 +18,7 @@ export default function NewTournamentPage() {
             })
             router.push("/dashboard/tournaments")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Turnuva eklenirken bir hata oluştu.",

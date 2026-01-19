@@ -33,7 +33,7 @@ export function EditParentClient({ id }: EditParentClientProps) {
             })
             router.push("/dashboard/parents")
             router.refresh()
-        } catch (_error) {
+        } catch {
             toast({
                 title: "Hata!",
                 description: "Veli güncellenirken bir hata oluştu.",
