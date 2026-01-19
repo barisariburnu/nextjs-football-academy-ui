@@ -1,10 +1,4 @@
-"use client"
-
-import { TeamForm } from "@/components/teams/team-form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useRouter } from "next/navigation"
-import { toast } from "@/components/ui/use-toast"
-import { use } from "react"
+import { EditTeamClient } from "./edit-team-client"
 
 interface EditTeamPageProps {
     params: Promise<{
@@ -12,56 +6,12 @@ interface EditTeamPageProps {
     }>
 }
 
-export default function EditTeamPage({ params }: EditTeamPageProps) {
-    const router = useRouter()
-    const { id } = use(params)
+export function generateStaticParams() {
+    return [{ id: "1" }]
+}
 
-    // Örnek takım verisi - Bu veri API'den gelecek
-    const teamData = {
-        id: id,
-        name: "U15 Takımı",
-        category: "U15",
-        coach: "Fatih Terim",
-        players: ["Ali Yılmaz", "Mehmet Kaya"],
-        status: "active" as const,
-    }
+export default async function EditTeamPage({ params }: EditTeamPageProps) {
+    const { id } = await params
 
-    const onSubmit = async (data: any) => {
-        try {
-            // Burada API çağrısı yapılacak
-            console.log("Güncellenecek takım verileri:", { id, ...data })
-            toast({
-                title: "Başarılı!",
-                description: "Takım başarıyla güncellendi.",
-            })
-            router.push("/dashboard/teams")
-            router.refresh()
-        } catch (error) {
-            toast({
-                title: "Hata!",
-                description: "Takım güncellenirken bir hata oluştu.",
-                variant: "destructive",
-            })
-        }
-    }
-
-    return (
-        <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Takım Düzenle</h1>
-            </div>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle>Takım Bilgileri</CardTitle>
-                    <CardDescription>
-                        Takım bilgilerini güncellemek için formu düzenleyin.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <TeamForm initialData={teamData} onSubmit={onSubmit} />
-                </CardContent>
-            </Card>
-        </div>
-    )
-} 
+    return <EditTeamClient id={id} />
+}

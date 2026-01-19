@@ -4,24 +4,39 @@ import { TeamForm } from "@/components/teams/team-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
+import { Team } from "../../columns"
 
-export default function NewTeamPage() {
+interface EditTeamClientProps {
+    id: string
+}
+
+export function EditTeamClient({ id }: EditTeamClientProps) {
     const router = useRouter()
+
+    // Burada API'den takım verisi çekilecek
+    const team: Team = {
+        id: id,
+        name: "U15 Takımı",
+        coach: "Fatih Terim",
+        players: [],
+        category: "U15",
+        status: "active" as const,
+    }
 
     const onSubmit = async (data: Record<string, unknown>) => {
         try {
             // Burada API çağrısı yapılacak
-            console.log("Yeni takım verileri:", data)
+            console.log("Güncellenecek takım verileri:", { id, ...data })
             toast({
                 title: "Başarılı!",
-                description: "Takım başarıyla eklendi.",
+                description: "Takım başarıyla güncellendi.",
             })
             router.push("/dashboard/teams")
             router.refresh()
         } catch (_error) {
             toast({
                 title: "Hata!",
-                description: "Takım eklenirken bir hata oluştu.",
+                description: "Takım güncellenirken bir hata oluştu.",
                 variant: "destructive",
             })
         }
@@ -30,20 +45,20 @@ export default function NewTeamPage() {
     return (
         <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Yeni Takım</h1>
+                <h1 className="text-3xl font-bold tracking-tight">Takım Düzenle</h1>
             </div>
 
             <Card>
                 <CardHeader>
                     <CardTitle>Takım Bilgileri</CardTitle>
                     <CardDescription>
-                        Yeni takım eklemek için formu doldurun.
+                        Takım bilgilerini güncellemek için formu düzenleyin.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <TeamForm onSubmit={onSubmit} />
+                    <TeamForm initialData={team} onSubmit={onSubmit} />
                 </CardContent>
             </Card>
         </div>
     )
-} 
+}

@@ -6,13 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header"
 import { DataTableRowActions } from "@/components/datatable/data-table-row-actions"
 
-// Örnek takım listesi - Bu veri API'den gelecek
-const availableTeams = [
-    "U13 Takımı",
-    "U15 Takımı",
-    "U17 Takımı",
-    "U19 Takımı"
-]
+
 
 export type Tournament = {
     id: string

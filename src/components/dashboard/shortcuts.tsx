@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import {
     CommandDialog,
     CommandEmpty,
@@ -12,7 +11,6 @@ import {
     CommandShortcut,
 } from "@/components/ui/command"
 import {
-    CalendarDays,
     GraduationCap,
     LayoutDashboard,
     Settings,

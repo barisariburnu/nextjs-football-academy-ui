@@ -23,7 +23,7 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
     const router = useRouter()
     const pathname = usePathname()
-    const data = row.original as any
+    const data = row.original as Record<string, unknown>
 
     // URL'den entity type'ı al (players, coaches, parents)
     const entityType = pathname.split("/").filter(Boolean)[1]
@@ -39,7 +39,7 @@ export function DataTableRowActions<TData>({
                 description: "Kayıt başarıyla kopyalandı.",
             })
             router.refresh()
-        } catch (error) {
+        } catch (_error) {
             toast({
                 title: "Hata!",
                 description: "Kayıt kopyalanırken bir hata oluştu.",
@@ -57,7 +57,7 @@ export function DataTableRowActions<TData>({
                 description: "Kayıt başarıyla silindi.",
             })
             router.refresh()
-        } catch (error) {
+        } catch (_error) {
             toast({
                 title: "Hata!",
                 description: "Kayıt silinirken bir hata oluştu.",

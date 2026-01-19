@@ -31,17 +31,13 @@ interface DataTableToolbarProps<TData> {
         id: string
         title: string
     }[]
-    deletableColumns?: {
-        id: string
-        title: string
-    }[]
+
 }
 
 export function DataTableToolbar<TData>({
     table,
     filterableColumns = [],
     searchableColumns = [],
-    deletableColumns = [],
 }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0
 

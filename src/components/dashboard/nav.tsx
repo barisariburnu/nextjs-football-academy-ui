@@ -1,19 +1,16 @@
 "use client"
 
 import Link from "next/link"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, Menu, Search, Settings, PanelLeft, Sun, Moon, LogOut, User, Shield } from "lucide-react"
+import { Bell, Menu, Search, PanelLeft, Sun, Moon } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Shortcuts } from "@/components/dashboard/shortcuts"
 import { UserNav } from "@/components/dashboard/user-nav"

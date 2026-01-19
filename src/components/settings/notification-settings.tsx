@@ -5,8 +5,7 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Bell, Calendar, MessageSquare, Trophy, Users } from "lucide-react"
+import { Calendar, Trophy, Users } from "lucide-react"
 import { useState } from "react"
 
 const notifications = [

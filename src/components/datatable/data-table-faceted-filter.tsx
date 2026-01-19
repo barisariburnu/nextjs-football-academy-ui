@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { CheckIcon, Filter } from "lucide-react"
+import { Column } from "@tanstack/react-table"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -21,8 +22,8 @@ import {
 } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 
-interface DataTableFacetedFilterProps {
-    column?: any
+interface DataTableFacetedFilterProps<TData, TValue> {
+    column?: Column<TData, TValue>
     title?: string
     options: {
         label: string
@@ -31,11 +32,11 @@ interface DataTableFacetedFilterProps {
     }[]
 }
 
-export function DataTableFacetedFilter({
+export function DataTableFacetedFilter<TData, TValue>({
     column,
     title,
     options,
-}: DataTableFacetedFilterProps) {
+}: DataTableFacetedFilterProps<TData, TValue>) {
     const facets = column?.getFacetedUniqueValues()
     const selectedValues = new Set(column?.getFilterValue() as string[])
 

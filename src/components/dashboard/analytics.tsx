@@ -3,13 +3,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Overview } from "@/components/dashboard/overview"
-import { BarChart3, TrendingUp, Users, UserPlus, Trophy, Calendar } from "lucide-react"
+import { Users, UserPlus, Trophy, Calendar } from "lucide-react"
 import { AgeDistribution } from "@/components/analytics/age-distribution"
 import { PositionDistribution } from "@/components/analytics/position-distribution"
-import { ActivityTimeline } from "@/components/analytics/activity-timeline"
 import { TeamPerformance } from "@/components/analytics/team-performance"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 const stats = [
     {

@@ -8,7 +8,7 @@ import { toast } from "@/components/ui/use-toast"
 export default function NewParentPage() {
     const router = useRouter()
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: Record<string, unknown>) => {
         try {
             // Burada API çağrısı yapılacak
             console.log("Yeni veli verileri:", data)
@@ -18,7 +18,7 @@ export default function NewParentPage() {
             })
             router.push("/dashboard/parents")
             router.refresh()
-        } catch (error) {
+        } catch (_error) {
             toast({
                 title: "Hata!",
                 description: "Veli eklenirken bir hata oluştu.",

@@ -1,27 +1,42 @@
 "use client"
 
-import { TeamForm } from "@/components/teams/team-form"
+import { ParentForm } from "@/components/parents/parent-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
+import { Parent } from "../../columns"
 
-export default function NewTeamPage() {
+interface EditParentClientProps {
+    id: string
+}
+
+export function EditParentClient({ id }: EditParentClientProps) {
     const router = useRouter()
+
+    // Burada API'den veli verisi çekilecek
+    const parent: Parent = {
+        id: id,
+        name: "Ali Veli",
+        email: "ali@example.com",
+        phone: "+90 555 123 4567",
+        children: ["Ahmet Yılmaz"],
+        status: "active"
+    }
 
     const onSubmit = async (data: Record<string, unknown>) => {
         try {
             // Burada API çağrısı yapılacak
-            console.log("Yeni takım verileri:", data)
+            console.log("Güncellenecek veli verileri:", data)
             toast({
                 title: "Başarılı!",
-                description: "Takım başarıyla eklendi.",
+                description: "Veli başarıyla güncellendi.",
             })
-            router.push("/dashboard/teams")
+            router.push("/dashboard/parents")
             router.refresh()
         } catch (_error) {
             toast({
                 title: "Hata!",
-                description: "Takım eklenirken bir hata oluştu.",
+                description: "Veli güncellenirken bir hata oluştu.",
                 variant: "destructive",
             })
         }
@@ -30,20 +45,20 @@ export default function NewTeamPage() {
     return (
         <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold tracking-tight">Yeni Takım</h1>
+                <h1 className="text-3xl font-bold tracking-tight">Veli Düzenle</h1>
             </div>
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Takım Bilgileri</CardTitle>
+                    <CardTitle>Veli Bilgileri</CardTitle>
                     <CardDescription>
-                        Yeni takım eklemek için formu doldurun.
+                        Veli bilgilerini güncellemek için formu düzenleyin.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <TeamForm onSubmit={onSubmit} />
+                    <ParentForm initialData={parent} onSubmit={onSubmit} />
                 </CardContent>
             </Card>
         </div>
     )
-} 
+}
